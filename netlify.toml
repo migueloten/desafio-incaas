@@ -1,11 +1,12 @@
 [build]
-  command = "ng build --prod"
-  publish = "dist/desafio-incaas"  # ajuste conforme seu outputPath
+  command = "ng build --configuration production"
+  publish = "dist/desafio-incaas" # ajuste conforme o outputPath do seu angular.json
 
 [[redirects]]
   from = "/api/*"
   to = "https://api-publica.datajud.cnj.jus.br/:splat"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
