@@ -1,6 +1,6 @@
 [build]
   command = "ng build --configuration production"
-  publish = "dist/desafio-incaas" # ajuste conforme o outputPath do seu angular.json
+  publish = "dist/desafio-incaas/browser"
 
 [[redirects]]
   from = "/api/*"
