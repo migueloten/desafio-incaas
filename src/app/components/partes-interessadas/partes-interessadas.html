@@ -1,0 +1,52 @@
+<div class="flex items-center justify-center w-screen h-screen-80 bg-zinc-200">
+  <div class="flex flex-col gap-5 bg-white w-11/12 h-11/12 rounded-lg shadow-lg p-8">
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl font-bold uppercase">Partes interessadas</h1>
+      <div class="flex items-center gap-2">
+        <button class="flex items-center justify-center text-lg font-bold w-32 h-10 text-white bg-orange-800 hover:bg-orange-900 rounded-md" (click)="handleCloseForms()">Cancelar</button>
+        <button class="flex items-center justify-center text-lg font-bold w-32 h-10 text-white bg-cyan-800 hover:bg-cyan-900 rounded-md" (click)="handleOpenFormCadastro()">Cadastrar</button>
+      </div>
+    </div>
+    <div class="flex flex-col h-full-60">
+      <div class="w-full h-fit border-y-2 border-cyan-800 flex items-center justify-center">
+        @if(formCadastroIsOpen){
+          <app-form-cadastro-interesse></app-form-cadastro-interesse>
+        } @else if (formEdicaoIsOpen) {
+            <app-form-edicao-interesse [idCadastroEdicao]="idCadastroEdicao"></app-form-edicao-interesse>
+        }
+      </div>
+      <div class="h-full overflow-y-auto">
+        <table class="min-w-full h-fit divide-y divide-gray-200">
+          <thead class="bg-cyan-800 text-white h-12">
+            <tr>
+              <th class="text-center font-medium uppercase tracking-wider">Id</th>
+              <th class="text-center font-medium uppercase tracking-wider">Nome</th>
+              <th class="text-center font-medium uppercase tracking-wider">Tipo Pessoa</th>
+              <th class="text-center font-medium uppercase tracking-wider">Documento</th>
+              <th class="text-center font-medium uppercase tracking-wider">Email</th>
+              <th class="text-center font-medium uppercase tracking-wider">Editar</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200 text-sm">
+            @for(item of list; track item.id) {
+              <tr class="h-14">
+                <td class="text-center whitespace-nowrap">{{item.id}}</td>
+                <td class="text-center whitespace-nowrap">{{item.nome}}</td>
+                <td class="text-center whitespace-nowrap">
+                  {{ item.tipoPessoa === 'pf' ? 'Pessoa física' : 'Pessoa Jurídica' }}
+                </td>
+                <td class="text-center whitespace-nowrap">{{item.document}}</td>
+                <td class="text-center whitespace-nowrap">{{item.email}}</td>
+                <td class="text-center whitespace-nowrap">
+                  <button class="hover:fill-cyan-900 fill-cyan-700 justify-items-center" (click)="handleOpenFormEdicao(item.id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 22 22"><path d="m7 17.013l4.413-.015l9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583l-1.597 1.582l-1.586-1.585l1.594-1.58zM9 13.417l6.03-5.973l1.586 1.586l-6.029 5.971L9 15.006v-1.589z"/><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01c-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"/></svg>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

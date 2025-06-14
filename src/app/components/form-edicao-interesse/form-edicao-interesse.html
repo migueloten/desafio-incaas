@@ -1,0 +1,55 @@
+<form [formGroup]="form" (submit)="onSubmit()" class="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-5 py-8 items-end">
+  <div class="relative flex flex-col gap-1 items-start w-60">
+    <label class="required" aria-required="true" for="nome">Nome Completo</label>
+    <input formControlName="nome" id="nome" required class="w-full h-10 border rounded px-3" />
+    @if(form.get('nome')?.invalid && form.get('nome')?.touched){
+      <p class="absolute top-full text-red-600 text-sm">
+        Nome é obrigatório.
+      </p>
+    }
+  </div>
+
+  <div class="relative flex flex-col gap-1 items-start w-60">
+    <label class="required" aria-required="true" for="tipoPessoa">Tipo de Pessoa</label>
+    <select formControlName="tipoPessoa" id="tipoPessoa" class="w-full h-10 border rounded px-3">
+      @for(opt of tipoPessoaOptions; track opt.value){
+        <option [value]="opt.value">
+          {{ opt.label }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <div class="relative flex flex-col gap-1 items-start w-60">
+    <label class="required" aria-required="true" for="document">
+      {{ form.get('tipoPessoa')?.value === 'pj' ? 'CNPJ' : 'CPF' }}
+    </label>
+    <input formControlName="document" id="document" class="w-full h-10 border rounded px-3"
+      (input)="form.get('tipoPessoa')?.value === 'pj' ? mascaraCNPJ($event) : mascaraCPF($event)" />
+    @if(form.get('document')?.invalid && form.get('document')?.touched){
+      <p class="absolute top-full text-red-600 text-sm">
+        {{form.get('tipoPessoa')?.value === 'pj' ? "CNPJ" : "CPF"}} inválido.
+      </p>
+    }
+  </div>
+
+  <div class="relative flex flex-col gap-1 items-start w-60">
+    <label class="required" aria-required="true" for="email">E-mail</label>
+    <input formControlName="email" id="email" type="email" class="w-full h-10 border rounded px-3" />
+    @if(form.get('email')?.invalid && form.get('email')?.touched){
+      <p class="absolute top-full text-red-600 text-sm">
+        Insira um e-mail válido.
+      </p>
+    }
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <button type="button" class="w-44 h-10 font-bold bg-orange-800 hover:bg-orange-900 text-white rounded-md" (click)="handleExcluirItem()">
+      Excluir cadastro
+    </button>
+    <button type="submit" class="w-44 h-10 font-bold bg-cyan-800 hover:bg-cyan-900 text-white rounded-md">
+      Salvar alterações
+    </button>
+  </div>
+
+</form>

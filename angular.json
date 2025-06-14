@@ -56,7 +56,8 @@
               "buildTarget": "desafio-incaas:build:production"
             },
             "development": {
-              "buildTarget": "desafio-incaas:build:development"
+              "buildTarget": "desafio-incaas:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -81,5 +82,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "0e8ed631-322c-4b37-88f0-23e10727e4e7"
   }
 }

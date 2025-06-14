@@ -1,0 +1,57 @@
+<div class="w-full h-fit flex items-center justify-center">
+  <form [formGroup]="form" (submit)="onSubmit()" class="w-full flex items-end pb-2 justify-start gap-4">
+    <div class="relative flex flex-col gap-1 items-start w-60">
+      <label for="num_process">Número do processo</label>
+      <input formControlName="num_process" id="num_process" type="text" class="w-full h-10 border rounded px-3" />
+    </div>
+
+    <div class="relative flex flex-col gap-1 items-start w-60">
+      <label for="classe">Classe</label>
+      <input formControlName="classe" id="classe" type="text" class="w-full h-10 border rounded px-3" />
+    </div>
+
+    <button type="submit" class="w-40 h-10 font-bold bg-cyan-800 hover:bg-cyan-900 text-white rounded-md">
+      Filtrar
+    </button>
+  </form>
+</div>
+<div class="overflow-y-auto h-[calc(100%-116px)] rounded-md">
+  <table class="min-w-full table-fixed border-collapse">
+    <thead class="bg-cyan-800 text-white sticky top-0 z-10">
+      <tr class="h-12">
+        <th class="w-1/6 text-center font-medium uppercase tracking-wider">Número do Processo</th>
+        <th class="w-1/6 text-center font-medium uppercase tracking-wider">Data de Ajuizamento</th>
+        <th class="w-1/6 text-center font-medium uppercase tracking-wider">Tribunal</th>
+        <th class="w-1/6 text-center font-medium uppercase tracking-wider">Classe Processual</th>
+        <th class="w-1/6 text-center font-medium uppercase tracking-wider">Orgão Julgador</th>
+        <th class="w-1/6 text-center font-medium uppercase tracking-wider">Detalhes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of processos; trackBy: trackByProcesso" class="h-14 odd:bg-gray-50 even:bg-white">
+        <td class="text-center text-sm">{{ p.numeroProcesso }}</td>
+        <td class="text-center text-sm">{{ dateBR(p.dataAjuizamento) }}</td>
+        <td class="text-center text-sm">{{ p.tribunal }}</td>
+        <td class="text-center text-sm">{{ p.classe.nome }}</td>
+        <td class="text-center text-sm capitalize">{{ p.orgaoJulgador.nome.toLowerCase() }}</td>
+        <td>
+          <a class="stroke-cyan-800 hover:stroke-cyan-900 flex justify-center" routerLink="/processo-individual/:{{ p.id }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 22 22"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 4H4v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5M9 15L20 4m-5 0h5v5"/></svg>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  @if(loading) {
+    <div class="h-80 stroke-cyan-900 w-full flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="animate-spin" width="200" height="200" viewBox="0 0 48 48"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="M24 4V8"/><path d="M34 6.6795L32 10.1436"/><path d="M41.3203 14L37.8562 16"/><path d="M44 24H40"/><path d="M41.3203 34L37.8562 32"/><path d="M34 41.3205L32 37.8564"/><path d="M24 44V40"/><path d="M14 41.3205L16 37.8564"/><path d="M6.67969 34L10.1438 32"/><path d="M4 24H8"/><path d="M6.67969 14L10.1438 16"/><path d="M14 6.6795L16 10.1436"/></g></svg>
+    </div>
+  }
+</div>
+<div class="flex items-center justify-center w-full h-10">
+  <button (click)="carregarProximaPagina()" class="w-40 h-8 font-bold bg-cyan-800 hover:bg-cyan-900 text-white rounded-md">
+    Carregar mais
+  </button>
+</div>
+

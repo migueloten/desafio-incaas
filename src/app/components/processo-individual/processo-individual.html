@@ -1,0 +1,87 @@
+<div class="flex items-center justify-center w-screen h-screen-80 bg-zinc-200">
+  <div class="flex flex-col gap-2 bg-white w-11/12 h-11/12 rounded-lg shadow-lg p-8">
+    <div class="flex justify-start items-center">
+      <h1 class="text-2xl font-bold uppercase">Detalhes do processo</h1>
+    </div>
+    <div class="flex flex-col h-full-60 overflow-y-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+        <div>
+          <h2 class="font-semibold">Número do Processo</h2>
+          <p>{{ processo?.numeroProcesso }}</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Classe</h2>
+          <p>{{ processo?.classe?.nome }} ({{ processo?.classe?.codigo }})</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Tribunal</h2>
+          <p>{{ processo?.tribunal }}</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Grau</h2>
+          <p>{{ processo?.grau }}</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Órgão Julgador</h2>
+          <p>{{ processo?.orgaoJulgador?.nome }}</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Formato</h2>
+          <p>{{ processo?.formato?.nome }}</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Sistema</h2>
+          <p>{{ processo?.sistema?.nome }}</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Nível de Sigilo</h2>
+          <p>{{ processo?.nivelSigilo }}</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Data de Ajuizamento</h2>
+          <p>{{ processo?.dataAjuizamento | date:'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+        <div>
+          <h2 class="font-semibold">Última Atualização</h2>
+          <p>{{ processo?.dataHoraUltimaAtualizacao | date:'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+        <div class="md:col-span-2">
+          <h2 class="font-semibold">Assuntos</h2>
+          <ul class="list-disc pl-6">
+            <li *ngFor="let assunto of processo?.assuntos">{{ assunto.nome }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <h2 class="font-semibold text-lg pb-2">Movimentações</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-cyan-800 text-white h-10">
+              <tr>
+                <th class="text-center font-medium uppercase tracking-wider">Data/Hora</th>
+                <th class="text-center font-medium uppercase tracking-wider">Movimento</th>
+                <th class="text-center font-medium uppercase tracking-wider">Complementos</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200 text-sm">
+              <tr class="h-10" *ngFor="let mov of processo?.movimentos">
+                <td class="text-center text-xs">{{ mov.dataHora | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td class="text-center text-xs">{{ mov.nome }}</td>
+                <td class="text-center text-xs">
+                  <ul *ngIf="mov.complementosTabelados && mov.complementosTabelados.length > 0" >
+                    <li *ngFor="let comp of mov.complementosTabelados">
+                      {{ comp.nome }} <span *ngIf="comp.valor">({{ comp.valor }})</span>
+                      <span *ngIf="comp.descricao">- {{ comp.descricao }}</span>
+                    </li>
+                  </ul>
+                  <span *ngIf="!mov.complementosTabelados || mov.complementosTabelados.length === 0">-</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
